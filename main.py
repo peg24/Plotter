@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import filedialog
 import numpy as np
 import matplotlib.pyplot as plt 
 from PIL import ImageTk, Image 
@@ -15,7 +16,6 @@ x_interval = StringVar(window) # interval steps X input
 
 frame_input = ttk.Frame(window,height=5)
 frame_input.grid(row=0)
-
 
 input_formula = ttk.Entry(frame_input,textvariable=input)
 input_formula.grid(row=0,column=1)
@@ -37,25 +37,8 @@ input_x_interval.grid(row=3,column=1)
 label_x_interval = ttk.Label(frame_input,text='steps')
 label_x_interval.grid(row=3,column=0)
 
-frame_plot = ttk.Frame(window)
-frame_plot.grid(row=1)
-canvas = Canvas(frame_plot,
-                width = 600, 
-				height = 600) 
 
-canvas.grid() 
 
-def showplot():
-    # loading the image 
-    img = ImageTk.PhotoImage(Image.open("data/plot.png")) 
-    # arranging application parameters 
-   
-
-    # arranging image parameters 
-    # in the application 
-    canvas.create_image(0,0, anchor = NW, 
-				image = img) 
-    
 
 def createplot():
     
@@ -63,13 +46,10 @@ def createplot():
     tmp_x1 = eval(x1.get())
     tmp_x_interval = eval(x_interval.get())
     
-    
     x = np.arange(tmp_x0,tmp_x1,tmp_x_interval) 
    
     y = eval(input.get())
     
-   
-
     # Plot the points using matplotlib 
     plt.plot(x, y) 
    # plt.plot(x, y_cos) 
@@ -78,19 +58,16 @@ def createplot():
     #plt.title('Sine and Cosine') 
     #plt.legend(['Sine', 'Cosine']) 
 
-    #plt.show()
+  
     plt.savefig("data/plot.png",
                 facecolor='white',
                 bbox_inches="tight",
                 pad_inches=0.3,
                 transparent=True)
-    
-    
+    plt.show()
 
 input_button = ttk.Button(frame_input,text='Create Plot',command=createplot)
 input_button.grid(row=0,column=2,rowspan=2)
-input_button = ttk.Button(frame_input,text='Show Plot',command=showplot)
-input_button.grid(row=1,column=2,rowspan=2)
 
 
 # running the application 
